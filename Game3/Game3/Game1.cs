@@ -72,6 +72,9 @@ namespace Game3
             }
             // rotation += 0.001f;
             //camera.UpdateViewMatrix(Vector3.Transform(new Vector3(50, 50, 50), Matrix.CreateRotationY(rotation)), new Vector3(60, 30, 60), Vector3.Up);
+
+            triangle.MoveCube(0,0,0, new Vector3(-1*gameTime.ElapsedGameTime.Milliseconds/1000f,0,0));
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();

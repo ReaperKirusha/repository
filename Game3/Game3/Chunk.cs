@@ -8,8 +8,16 @@ using System.Threading.Tasks;
 
 namespace Game3
 {
+    public struct CubeParam
+    {
+        public int StartOfIdicies;
+        public int StartOfVerticles;
+    }
+
     public class Triangle
     {
+        
+
         int numbersOfCubesX, numbersOfCubesY, numbersOfCubesZ; //кол-во кубов по осям
 
         VertexPositionTexture[] vertices;//массив вершин
@@ -142,6 +150,37 @@ namespace Game3
             }
            
     }
+
+        public CubeParam GetCubeParam(int x, int y, int z) { // взять параметры куба под номером(отсчет от 0)
+            CubeParam temp;
+            temp.StartOfIdicies = 36 * x + 36 * numbersOfCubesY * y + 36 * numbersOfCubesZ * numbersOfCubesZ * z;
+            temp.StartOfVerticles = 16 * x + 16 * numbersOfCubesY * y + 16 * numbersOfCubesZ * numbersOfCubesZ * z;
+            return temp;
+        }
+
+        public void MoveCube(int x, int y, int z, Vector3 MovingVector) { // сдвигает выбраный куб на вектор (отсчет то 0)
+            CubeParam MovingCubeParam = GetCubeParam(x, y, z);
+            
+
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+            vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
+
+        }
+
 
 
         public void Draw(Matrix View, Matrix Projection)
