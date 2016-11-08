@@ -82,14 +82,14 @@ namespace Game3
                         vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 1); //8
 
                         // нижние и верхние вершины
-                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 0); //0
-                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 0); 
-                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(1, 0);
-                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(1, 0); // 3
-                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 1);//4
-                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 1);
-                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(1, 1);
-                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(1, 1);// 7
+                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 0); //9
+                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 0); //10
+                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(1, 0); //11
+                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(1, 0); //12
+                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 1); //13
+                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 1); //14
+                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(1, 1); //15
+                        vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(1, 1); //16
 
 
                         //индексы для боковых граней
