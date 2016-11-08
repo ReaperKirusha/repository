@@ -44,7 +44,7 @@ namespace Game3
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // Create a new SpriteBatch, which can be used to draw textures.
             camera = new MoveableCamera(GraphicsDevice);
-            triangle = new Triangle(GraphicsDevice, new Vector3(4, 0, 0), 16, Content.Load<Texture2D>("texture"));
+            triangle = new Triangle(GraphicsDevice, new Vector3(4, 0, 0), 4, 10, 3, Content.Load<Texture2D>("texture"));
             
 
             // TODO: use this.Content to load your game content here
