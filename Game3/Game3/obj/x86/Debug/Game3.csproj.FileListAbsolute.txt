@@ -25,3 +25,4 @@ c:\users\кирилл\documents\visual studio 2015\Projects\Game3\Game3\obj\x86\
 c:\users\кирилл\documents\visual studio 2015\Projects\Game3\Game3\bin\Windows\x86\Debug\Content\texture.xnb
 c:\users\кирилл\documents\visual studio 2015\Projects\Game3\Game3\obj\x86\Debug\Game3.csprojResolveAssemblyReference.cache
 c:\users\кирилл\documents\visual studio 2015\Projects\Game3\Game3\bin\Windows\x86\Debug\Content\ground.xnb
+C:\Users\Кирилл\documents\visual studio 2015\Projects\Game3\Game3\bin\Windows\x86\Debug\Content\Cursor.xnb

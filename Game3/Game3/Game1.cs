@@ -11,15 +11,17 @@ namespace Game3
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Camera camera;
-
-        Triangle triangle;
-
+        MoveableCamera camera;
+        MouseState mouseState = Mouse.GetState();
+        Chunk triangle;
+        Texture2D CursorTexture;
+        RayFromScreen rayFromScreen;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -31,7 +33,7 @@ namespace Game3
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -44,9 +46,9 @@ namespace Game3
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // Create a new SpriteBatch, which can be used to draw textures.
             camera = new MoveableCamera(GraphicsDevice);
-            triangle = new Triangle(GraphicsDevice, new Vector3(4, 0, 0), 4, 10, 3, Content.Load<Texture2D>("texture"));
-            
-
+            triangle = new Chunk(GraphicsDevice, new Vector3(4, 0, 0), 4, 10, 3, Content.Load<Texture2D>("texture"));
+            CursorTexture = Content.Load<Texture2D>("Cursor");
+            rayFromScreen = new RayFromScreen();
             // TODO: use this.Content to load your game content here
         }
 
@@ -66,9 +68,14 @@ namespace Game3
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (IsActive)
+            KeyboardState keyState = Keyboard.GetState();
+            if (IsActive && keyState.IsKeyDown(Keys.V))
             {
+                IsMouseVisible = false;
                 camera.Update(gameTime);
+            }
+            else {
+                IsMouseVisible = true;
             }
             // rotation += 0.001f;
             //camera.UpdateViewMatrix(Vector3.Transform(new Vector3(50, 50, 50), Matrix.CreateRotationY(rotation)), new Vector3(60, 30, 60), Vector3.Up);
@@ -80,6 +87,8 @@ namespace Game3
                 Exit();
                 return;
             }
+            rayFromScreen.update(GraphicsDevice.Viewport.Unproject(new Vector3(mouseState.X ,mouseState.Y, 0) ,camera.View, camera.Projection, Matrix.Identity), camera.GetCameraTarget);
+            
             base.Update(gameTime);
         }
 
@@ -89,10 +98,30 @@ namespace Game3
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            
             GraphicsDevice.Clear(Color.Black);
             
             triangle.Draw(camera.View, camera.Projection);
             // TODO: Add your drawing code here
+            //4, 10, 3
+            for (int z = 0; z < 3; z++)
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    for (int x = 0; x < 4; x++)
+                    {
+                        if (rayFromScreen.IfInteresects(triangle.GetCubeParam(x, y, z).BoundingBoxOfThatCube) != 0) {
+
+                            spriteBatch.Begin();
+                            spriteBatch.Draw(CursorTexture, Vector2.Zero, Color.White);
+                            spriteBatch.End();
+
+                        }
+                    }
+                }
+            }
+            
+
 
             base.Draw(gameTime);
         }

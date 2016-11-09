@@ -42,8 +42,10 @@
     <Compile Include="Game1.cs" />
     <Compile Include="MoveableCamera.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectionTriangle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Chunk.cs" />
+    <Compile Include="RayFromScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

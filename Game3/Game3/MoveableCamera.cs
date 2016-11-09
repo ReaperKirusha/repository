@@ -11,17 +11,18 @@ namespace Game3
 {
     public class MoveableCamera : Camera
     {
-        public float TranslationSpeed = 50f;
-        public float RotationSpeed = 0.1f;
-        public Vector3 Position;
-        public float Yaw = 0;
-        public float Pitch = 0;
-
+        private float TranslationSpeed = 50f;
+        private float RotationSpeed = 0.1f;
+        private Vector3 Position;
+        private float Yaw = 0;
+        private float Pitch = 0;
+        Vector3 cameraFinalTarget;
 
         private MouseState lastMouseState;
 
         public MoveableCamera(GraphicsDevice device) : base(device)
         {
+            cameraFinalTarget = new Vector3(1,1,1);
             lastMouseState = Mouse.GetState();
         }
 
@@ -63,18 +64,20 @@ namespace Game3
                 translation += new Vector3(-TranslationSpeed, 0, 0) * elapsedTime;
             }
 
+
             Matrix rotationMatrix = Matrix.CreateFromYawPitchRoll(Yaw, Pitch, 0);
+            Mouse.SetPosition(device.Viewport.Width / 2, device.Viewport.Height / 2);
+            lastMouseState = Mouse.GetState();
 
 
             Vector3 Up = Vector3.Transform(Vector3.Up, rotationMatrix);
 
             Position += Vector3.Transform(translation, rotationMatrix);
-            Vector3 cameraFinalTarget = Position + Vector3.Transform(new Vector3(0, 0, -1), rotationMatrix);
+            cameraFinalTarget = Position + Vector3.Transform(new Vector3(0, 0, -1), rotationMatrix);
 
-            View = Matrix.CreateLookAt(Position, cameraFinalTarget, Up);
-
-            Mouse.SetPosition(device.Viewport.Width / 2, device.Viewport.Height / 2);
-            lastMouseState = Mouse.GetState();
+            View = Matrix.CreateLookAt(Position, cameraFinalTarget, Up);            
         }
+
+        public Vector3 GetCameraTarget { get { return cameraFinalTarget; } }
     }
 }

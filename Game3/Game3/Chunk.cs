@@ -12,16 +12,16 @@ namespace Game3
     {
         public int StartOfIdicies;
         public int StartOfVerticles;
+        public BoundingBox BoundingBoxOfThatCube;
     }
 
-    public class Triangle
-    {
-        
-
+    public class Chunk
+    { 
         int numbersOfCubesX, numbersOfCubesY, numbersOfCubesZ; //кол-во кубов по осям
 
         VertexPositionTexture[] vertices;//массив вершин
         int[] indices;//массив индексов
+        BoundingBox[] BoundingBoxes;// массив тел
 
         // векторы для IterationVector, для сдвига вершин куба
         public Vector3 Zplus = new Vector3(0,0,10);
@@ -33,14 +33,18 @@ namespace Game3
         BasicEffect basicEffect;
         GraphicsDevice device;
 
-        public Triangle(GraphicsDevice device, Vector3 a, int numbersOfCubesX, int numbersOfCubesY, int numbersOfCubesZ, Texture2D texture)
+        public Chunk(GraphicsDevice device, Vector3 a, int numbersOfCubesX, int numbersOfCubesY, int numbersOfCubesZ, Texture2D texture)
         {
+      
+
             this.numbersOfCubesX = numbersOfCubesX;
             this.numbersOfCubesY = numbersOfCubesY;
             this.numbersOfCubesZ = numbersOfCubesZ;
 
             vertices = new VertexPositionTexture[16 * numbersOfCubesX * numbersOfCubesY * numbersOfCubesZ]; // на каждый куб 16 вершин
             indices = new int[36 * numbersOfCubesX * numbersOfCubesY * numbersOfCubesZ]; // на каждый куб 12 треугольников =  36 индексов
+            BoundingBoxes = new BoundingBox[numbersOfCubesX * numbersOfCubesY * numbersOfCubesZ];// кол-во кубов
+            Vector3[] VectorsForBoundingBox = new Vector3[8];
 
             this.texture = texture;
 
@@ -53,6 +57,7 @@ namespace Game3
             int IterationIndex = 0; // переменная для назначения каждому индексу вершины, на каждой итерации увеличивается на 16(кол-во вершин для куба)
             int VerticleTextureIndex = 0; //переменная для индексации verticles[i].TextureCoordinate
             int VerticleIndex = 0; //переменная для индексации verticles[i].Position
+            int BoundingBoxIndex = 0;// переменная для индексации Bounding box 
 
             for (int i = 0; i < numbersOfCubesZ; i++) { //третья итерация влияет на кол-во кубов по Z
 
@@ -78,6 +83,14 @@ namespace Game3
                         vertices[VerticleIndex++].Position = a + Zplus + Yplus + IterationVector;
                         vertices[VerticleIndex++].Position = a + Zplus + Yplus + Xplus + IterationVector;
                         vertices[VerticleIndex++].Position = a + Zplus + Xplus + IterationVector;
+
+                        //BouningBox
+                        for (int VectorsForBoundinBoxIndex = 0; VectorsForBoundinBoxIndex < 8; VectorsForBoundinBoxIndex++) {
+                            VectorsForBoundingBox[VectorsForBoundinBoxIndex] = vertices[VerticleIndex-15+VectorsForBoundinBoxIndex].Position;
+                        }
+
+                        //BoundingBoxIndex = g + numbersOfCubesY * j + numbersOfCubesZ * numbersOfCubesZ * i;
+                        BoundingBoxes[BoundingBoxIndex++] = BoundingBox.CreateFromPoints(VectorsForBoundingBox);
 
                         //боковые вершины
                         vertices[VerticleTextureIndex++].TextureCoordinate = new Vector2(0.5f, 1); //1
@@ -155,13 +168,14 @@ namespace Game3
             CubeParam temp;
             temp.StartOfIdicies = 36 * x + 36 * numbersOfCubesY * y + 36 * numbersOfCubesZ * numbersOfCubesZ * z;
             temp.StartOfVerticles = 16 * x + 16 * numbersOfCubesY * y + 16 * numbersOfCubesZ * numbersOfCubesZ * z;
+            temp.BoundingBoxOfThatCube = BoundingBoxes[x + numbersOfCubesY * y + numbersOfCubesZ * numbersOfCubesZ * z];
+
             return temp;
         }
 
         public void MoveCube(int x, int y, int z, Vector3 MovingVector) { // сдвигает выбраный куб на вектор (отсчет то 0)
             CubeParam MovingCubeParam = GetCubeParam(x, y, z);
             
-
             vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
             vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
             vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
@@ -178,7 +192,6 @@ namespace Game3
             vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
             vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
             vertices[MovingCubeParam.StartOfVerticles++].Position += MovingVector;
-
         }
 
 
@@ -193,7 +206,7 @@ namespace Game3
             basicEffect.CurrentTechnique.Passes[0].Apply();
 
             device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, vertices, 0, vertices.Length, indices, 0, 12 * numbersOfCubesX * numbersOfCubesY * numbersOfCubesZ);
-            
+
         }
     }
 }

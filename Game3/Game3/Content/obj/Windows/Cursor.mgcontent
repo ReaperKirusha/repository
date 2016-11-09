@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Кирилл/documents/visual studio 2015/Projects/Game3/Game3/Content/ground.dds</SourceFile>
-  <SourceTime>2016-10-18T14:57:18+03:00</SourceTime>
-  <DestFile>C:/Users/Кирилл/documents/visual studio 2015/Projects/Game3/Game3/Content/bin/Windows/ground.xnb</DestFile>
-  <DestTime>2016-11-08T22:24:25.41565+03:00</DestTime>
+  <SourceFile>C:/Users/Кирилл/documents/visual studio 2015/Projects/Game3/Game3/Content/Cursor.png</SourceFile>
+  <SourceTime>2016-10-16T13:46:12.6597682+03:00</SourceTime>
+  <DestFile>C:/Users/Кирилл/documents/visual studio 2015/Projects/Game3/Game3/Content/bin/Windows/Cursor.xnb</DestFile>
+  <DestTime>2016-11-09T13:32:17.3178438+03:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T09:36:08+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
